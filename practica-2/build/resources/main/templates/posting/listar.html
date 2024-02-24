@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f0f4f8; /* Color de fondo */
+        }
+
+        .navbar {
+            background-color: #495057; /* Color de fondo del navbar */
+        }
+
+        .navbar-brand {
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+
+        .navbar-toggler-icon {
+            background-color: #ffffff;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out; /* Agrega una transición suave */
+        }
+
+        .card:hover {
+            transform: scale(1.05); /* Aumenta el tamaño al pasar el ratón */
+        }
+
+        .card-title {
+            color: #343a40;
+        }
+
+        .card-subtitle {
+            color: #6c757d;
+        }
+
+        .badge {
+            background-color: #6c757d;
+            color: #ffffff;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .post-preview {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .post-preview button {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            margin: 10px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .post-preview button:hover {
+            opacity: 1;
+        }
+
+    </style>
+    <title th:text="${titulo}">Listar</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" id="mainNavbar">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                <a class="nav-link" href="/posting/listar">Blog post</a>
+                <!--                <a class="nav-link" href="#">Pricing</a>-->
+                <!--                <a class="nav-link disabled" aria-disabled="true">Disabled</a>-->
+                <button class="btn btn-primary" type="button" style="background: rgba(0,0,0,0.54);border-radius: 30px;border-color: rgba(7,7,7,0.17);"th:text="${tipo}" th:data-url="${sitio}" onclick="redirectToUrl(this)">LogIn</button>
+                <script th:inline="javascript">
+                    function redirectToUrl(button) {
+                        var url = button.getAttribute('data-url');
+                        window.location.href = url;
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4" th:text="${titulo}">....</h1>
+        <p class="lead">Lista de Publicaciones</p>
+    </div>
+
+    <a href="/posting/crear" class="btn btn-primary">New Post</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Autor</th>
+            <th scope="col">Titulo</th>
+            <th scope="col">Cuerpo</th>
+            <th scope="col">Etiquetas</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="articulo : ${lista}">
+            <th scope="row">
+                <a th:text="${articulo.id}" th:href="'visualizar/'+${articulo.id}"/>
+            </th>
+            <td th:text="${articulo.autor.getNombre()}">Autor</td>
+            <td th:text="${articulo.titulo}">titulo</td>
+            <td th:text="${articulo.cuerpo}">cuerpo</td>
+            <td th:text="${articulo.showEtiquetas()}">Etiquetas</td>
+            <td th:text="${articulo.fechaFormateada()}">Fecha</td>
+            <td>
+                <a th:text="Editar" th:href="'editar/'+${articulo.id}" th class="btn btn-secondary btn-sm"/> |
+                <a th:text="Eliminar" th:href="'eliminar/'+${articulo.id}" th class="btn btn-danger btn-sm"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

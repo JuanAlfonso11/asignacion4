@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <title th:text="${titulo}">...</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4" th:text="${titulo}">....</h1>
+    </div>
+
+    <!-- El endpoint que estará procesando el formulario será enviado por el controlador      -->
+    <form enctype="application/x-www-form-urlencoded" method="post" th:attr="action=${accion}" >
+        <div class="form-group">
+            <label for="username">UserName</label>
+            <!-- La variable visualizar aplica el formulario readonly.                -->
+            <input th:readonly="${visualizar}" th:value="${username} ? ${usuario.username} : ''" type="text" name="username" class="form-control" id="username" aria-describedby="username">
+        </div>
+
+        <div class="form-group">
+            <label for="user">Name</label>
+            <input th:readonly="${visualizar}" th:value="${usuario} ? ${usuario.nombre} : ''" type="text"  name="user" class="form-control" id="user">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input th:readonly="${visualizar}" th:value="${estudiante} ? ${usuario.password} : ''" type="text"  name="password" class="form-control" id="password">
+        </div>
+        <!-- Los botones para la creación del estudiante -->
+        <button th:if="${!visualizar}" type="submit" class="btn btn-primary">Crear</button>
+        <a href="/crud-simple/" class="btn btn-primary">Cancelar</a>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+</html>
